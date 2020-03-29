@@ -45,7 +45,7 @@ export default class TransactionsList extends Component {
   }
   refreshList() {
     axios
-      .get("http://localhost:5000/transactions/")
+      .get("/transactions/")
       .then(response => {
         this.setState({ transactions: response.data });
       })
@@ -57,7 +57,7 @@ export default class TransactionsList extends Component {
     this.refreshList();
   }
   deleteTransaction(id) {
-    axios.delete("http://localhost:5000/transactions/" + id).then(response => {
+    axios.delete("/transactions/" + id).then(response => {
       console.log(response.data);
     });
 
