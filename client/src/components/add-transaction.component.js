@@ -14,7 +14,7 @@ export default class AddTransaction extends Component {
     this.onChangeDate = this.onChangeDate.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.state = {
-      type: "Income",
+      type: "income",
       description: "",
       amount: 0,
       date: new Date()
@@ -93,8 +93,8 @@ export default class AddTransaction extends Component {
                         value={this.state.type}
                         onChange={this.onChangeType}
                       >
-                        <option value="Income">Income</option>
-                        <option value="Expense">Expense</option>
+                        <option value="income">Income</option>
+                        <option value="expense">Expense</option>
                       </Form.Control>
                     </FormGroup>
                     <FormGroup controlId="TransactionDescription">

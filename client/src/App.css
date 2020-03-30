@@ -1,3 +1,50 @@
-h1 {
-  color: blue;
+@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+
+body {
+  font-family: "Roboto", sans-serif;
+
+  background: -webkit-radial-gradient(rgb(36, 110, 178), rgb(87, 20, 90));
+  background: radial-gradient(rgb(36, 110, 178), rgb(87, 20, 90));
+}
+
+.list li {
+  background-color: #fff;
+  box-shadow: var(--box-shadow);
+  color: #333;
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.list {
+  width: 100%;
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 40px;
+}
+
+.income {
+  color: green;
+}
+
+.expense {
+  color: red;
+}
+
+.main {
+  background: white;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 10px 10px 20px 0px rgba(0, 0, 0, 0.75);
+  margin: 0 auto;
+  max-width: 650px;
+}
+
+span {
+  width: 100px;
+}
+.add {
+  width: 100%;
 }
