@@ -17,7 +17,7 @@ export default class AddTransaction extends Component {
       type: "income",
       description: "",
       amount: 0,
-      date: new Date()
+      date: new Date(),
     };
   }
   onSubmit(e) {
@@ -27,41 +27,41 @@ export default class AddTransaction extends Component {
       type: this.state.type,
       description: this.state.description,
       amount: this.state.amount,
-      date: this.state.date
+      date: this.state.date,
     };
 
     console.log(transaction);
 
     axios
       .post("http://localhost:5000/transactions/add", transaction)
-      .then(res => console.log(res.data));
+      .then((res) => console.log(res.data));
     alert("Transaction added!");
     this.setState({
       description: "",
-      amount: 0
+      amount: 0,
     });
   }
   onChangeType(e) {
     this.setState({
-      type: e.target.value
+      type: e.target.value,
     });
   }
 
   onChangeDescription(e) {
     this.setState({
-      description: e.target.value
+      description: e.target.value,
     });
   }
 
   onChangeAmount(e) {
     this.setState({
-      amount: e.target.value
+      amount: e.target.value,
     });
   }
 
   onChangeDate(date) {
     this.setState({
-      date: date
+      date: date,
     });
   }
 

@@ -1,21 +1,18 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@700&display=swap");
 body {
-  font-family: "Roboto", sans-serif;
-
-  background: -webkit-radial-gradient(rgb(36, 110, 178), rgb(87, 20, 90));
-  background: radial-gradient(rgb(36, 110, 178), rgb(87, 20, 90));
+  font-family: "Rubik", sans-serif;
+  background: -webkit-linear-gradient(91deg, rgb(0, 0, 0), rgb(87, 20, 90));
+  background: linear-gradient(91deg, rgb(0, 0, 0), rgb(87, 20, 90));
+  font-size: 0.9rem;
 }
-
 .list li {
-  background-color: #fff;
-  box-shadow: var(--box-shadow);
   color: #333;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   position: relative;
-  padding: 10px;
-  margin: 10px 0;
+  padding: 5px;
+  /* margin: 10px 0; */
+  border-bottom: 1px dotted lightgray;
 }
 
 .list {
@@ -45,6 +42,27 @@ body {
 span {
   width: 100px;
 }
-.add {
+.btn-add {
   width: 100%;
+  background: #511354;
+  color: white;
+}
+.bar {
+  position: absolute;
+  background: #511354;
+  height: 25px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.progress_bar {
+  height: 26px;
+  background-color: ghostwhite;
+  position: relative;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+}
+
+.text-progress {
+  position: relative;
+  color: white;
 }

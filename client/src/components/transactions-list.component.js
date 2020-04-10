@@ -4,36 +4,12 @@ import axios from "axios";
 import { Button, ButtonToolbar } from "react-bootstrap";
 import AddTransaction from "./add-transaction.component";
 
-const Transaction = props => (
-  // <tr>
-  //   <td>{props.transaction.type}</td>
-  //   <td>{props.transaction.description}</td>
-  //   <td>{props.transaction.amount} RSD</td>
-  //   <td>{props.transaction.date.substring(0, 10)}</td>
-  //   <td>
-  //     <button className="btn btn-info">
-  //       <Link to={"/edit/" + props.transaction._id}>
-  //         <i className="fas fa-edit"></i>
-  //       </Link>
-  //     </button>
-  //     <button
-  //       type="button"
-  //       className="btn btn-danger"
-  //       onClick={() => {
-  //         window.confirm("Are You Sure?") &&
-  //           props.deleteTransaction(props.transaction._id);
-  //       }}
-  //     >
-  //       <i className="fas fa-times"></i>
-  //     </button>
-  //   </td>
-  // </tr>
-
-  <li className="list-group-item">
-    <span className={props.transaction.type}>
+const Transaction = (props) => (
+  <li>
+    <span className={`${props.transaction.type} font-weight-bold`}>
       {props.transaction.description}
     </span>
-    <span>{props.transaction.amount} RSD</span>
+    <span>{props.transaction.amount} </span>
     <span>
       {" "}
       <button className="btn" title="edit">
@@ -70,11 +46,11 @@ export default class TransactionsList extends Component {
   }
   refreshList() {
     axios
-      .get("/transactions/")
-      .then(response => {
+      .get("http://localhost:5000/transactions/")
+      .then((response) => {
         this.setState({ transactions: response.data });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
@@ -82,17 +58,19 @@ export default class TransactionsList extends Component {
     this.refreshList();
   }
   deleteTransaction(id) {
-    axios.delete("/transactions/" + id).then(response => {
-      console.log(response.data);
-    });
+    axios
+      .delete("http://localhost:5000/transactions/" + id)
+      .then((response) => {
+        console.log(response.data);
+      });
 
     this.setState({
-      transactions: this.state.transactions.filter(el => el._id !== id)
+      transactions: this.state.transactions.filter((el) => el._id !== id),
     });
   }
 
   transactionList() {
-    return this.state.transactions.map(currenttransaction => {
+    return this.state.transactions.map((currenttransaction) => {
       return (
         <Transaction
           transaction={currenttransaction}
@@ -106,7 +84,7 @@ export default class TransactionsList extends Component {
   totalIncome() {
     let transactions = this.state.transactions;
     let income = transactions.filter(
-      currenttransaction => currenttransaction.type === "income"
+      (currenttransaction) => currenttransaction.type === "income"
     );
     if (transactions === undefined || transactions.length === 0) {
       return (income = 0);
@@ -115,7 +93,7 @@ export default class TransactionsList extends Component {
         return 0;
       } else
         return income
-          .map(currenttransaction => currenttransaction.amount)
+          .map((currenttransaction) => currenttransaction.amount)
           .reduce((prev, next) => prev + next);
     }
   }
@@ -123,7 +101,7 @@ export default class TransactionsList extends Component {
   totalExpense() {
     let transactions = this.state.transactions;
     let expense = transactions.filter(
-      currenttransaction => currenttransaction.type === "expense"
+      (currenttransaction) => currenttransaction.type === "expense"
     );
 
     if (transactions === undefined || transactions.length === 0) {
@@ -133,44 +111,49 @@ export default class TransactionsList extends Component {
         return 0;
       } else
         return expense
-          .map(currenttransaction => currenttransaction.amount)
+          .map((currenttransaction) => currenttransaction.amount)
           .reduce((prev, next) => prev + next);
     }
   }
 
   render() {
     let addModalClose = () => this.setState({ addModalShow: false });
+    let balance = parseInt(this.totalIncome()) - parseInt(this.totalExpense());
+    let progress = Math.floor((balance * 100) / this.totalIncome());
+    let progress_style = {
+      width: `${progress}%`,
+    };
     return (
       <div className="main">
+        <h1 className="text-center">Budget App</h1>
         <div className="text-center my-5">
           <h5 className="text-secondary">Remaining Balance</h5>
-          <h1 className="font-weight-bold">
-            {parseInt(this.totalIncome()) - parseInt(this.totalExpense())}
-          </h1>
+          <h1 className="font-weight-bold">{balance}</h1>
           <h5 className="text-secondary">of {this.totalIncome()}</h5>
         </div>
-
+        <div className="progress_bar mb-4">
+          <div className="bar" style={progress_style}></div>
+          <p className="text-center text-progress">{progress} %</p>
+        </div>
         <div>
-          <ul class="list list-group list-group-flush">
-            <li className="list-group-item">
-              <span className="font-weight-bold">description:</span>
-              <span className="font-weight-bold">amount:</span>
-              <span className="font-weight-bold">actions:</span>
+          <ul className="list">
+            <li className="list-header">
+              <span className="text-secondary">description:</span>
+              <span className="text-secondary">amount:</span>
+              <span className="text-secondary">actions:</span>
             </li>
             {this.transactionList()}
-            <li className="list-group-item">
-              <span className="font-weight-bold">total expense</span>
+            <li>
+              <span className="text-secondary">total expense</span>
 
-              <span className="font-weight-bold">
-                {this.totalExpense()} RSD
-              </span>
+              <span>{this.totalExpense()}</span>
               <span></span>
             </li>
           </ul>
         </div>
         <ButtonToolbar>
           <Button
-            variant="primary add"
+            variant="add"
             onClick={() => this.setState({ addModalShow: true })}
           >
             Add Transaction
