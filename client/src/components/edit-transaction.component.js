@@ -3,10 +3,13 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-export default class EditExercise extends Component {
+export default class EditTransaction extends Component {
   constructor(props) {
     super(props);
-
+    this.url =
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:5000/transactions/"
+        : "/transactions/";
     this.onChangeType = this.onChangeType.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeAmount = this.onChangeAmount.bind(this);
@@ -17,47 +20,47 @@ export default class EditExercise extends Component {
       type: "",
       description: "",
       amount: 0,
-      date: new Date()
+      date: new Date(),
     };
   }
 
   componentDidMount() {
     axios
-      .get("http://localhost:5000/transactions/" + this.props.match.params.id)
-      .then(response => {
+      .get(`${this.url}` + this.props.match.params.id)
+      .then((response) => {
         this.setState({
           type: response.data.type,
           description: response.data.description,
           amount: response.data.amount,
-          date: new Date(response.data.date)
+          date: new Date(response.data.date),
         });
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
   }
 
   onChangeType(e) {
     this.setState({
-      type: e.target.value
+      type: e.target.value,
     });
   }
 
   onChangeDescription(e) {
     this.setState({
-      description: e.target.value
+      description: e.target.value,
     });
   }
 
   onChangeAmount(e) {
     this.setState({
-      amount: e.target.value
+      amount: e.target.value,
     });
   }
 
   onChangeDate(date) {
     this.setState({
-      date: date
+      date: date,
     });
   }
 
@@ -68,18 +71,14 @@ export default class EditExercise extends Component {
       type: this.state.type,
       description: this.state.description,
       amount: this.state.amount,
-      date: this.state.date
+      date: this.state.date,
     };
 
     console.log(transaction);
 
     axios
-      .post(
-        "http://localhost:5000/transactions/update/" +
-          this.props.match.params.id,
-        transaction
-      )
-      .then(res => console.log(res.data));
+      .post(`${this.url}update/` + this.props.match.params.id, transaction)
+      .then((res) => console.log(res.data));
 
     window.location = "/";
   }

@@ -7,7 +7,10 @@ import DatePicker from "react-datepicker";
 export default class AddTransaction extends Component {
   constructor(props) {
     super(props);
-
+    this.url =
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:5000/transactions/add/"
+        : "/transactions/add/";
     this.onChangeType = this.onChangeType.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeAmount = this.onChangeAmount.bind(this);
@@ -22,7 +25,6 @@ export default class AddTransaction extends Component {
   }
   onSubmit(e) {
     e.preventDefault();
-
     const transaction = {
       type: this.state.type,
       description: this.state.description,
@@ -32,9 +34,7 @@ export default class AddTransaction extends Component {
 
     console.log(transaction);
 
-    axios
-      .post("http://localhost:5000/transactions/add", transaction)
-      .then((res) => console.log(res.data));
+    axios.post(`${this.url}`, transaction).then((res) => console.log(res.data));
     alert("Transaction added!");
     this.setState({
       description: "",

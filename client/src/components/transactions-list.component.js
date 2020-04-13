@@ -35,7 +35,10 @@ const Transaction = (props) => (
 export default class TransactionsList extends Component {
   constructor(props) {
     super(props);
-
+    this.url =
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:5000/transactions/"
+        : "/transactions/";
     this.deleteTransaction = this.deleteTransaction.bind(this);
     this.totalIncome = this.totalIncome.bind(this);
     this.state = { transactions: [], addModalShow: false };
@@ -46,7 +49,7 @@ export default class TransactionsList extends Component {
   }
   refreshList() {
     axios
-      .get("http://localhost:5000/transactions/")
+      .get(`${this.url}`)
       .then((response) => {
         this.setState({ transactions: response.data });
       })
@@ -58,11 +61,9 @@ export default class TransactionsList extends Component {
     this.refreshList();
   }
   deleteTransaction(id) {
-    axios
-      .delete("http://localhost:5000/transactions/" + id)
-      .then((response) => {
-        console.log(response.data);
-      });
+    axios.delete(`${this.url}` + id).then((response) => {
+      console.log(response.data);
+    });
 
     this.setState({
       transactions: this.state.transactions.filter((el) => el._id !== id),
