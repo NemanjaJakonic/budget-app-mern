@@ -43,11 +43,8 @@ export default class TransactionsList extends Component {
     this.totalIncome = this.totalIncome.bind(this);
     this.state = { transactions: [], addModalShow: false };
   }
-
-  componentDidMount() {
-    this.refreshList();
-  }
   refreshList() {
+    console.log("pomozi");
     axios
       .get(`${this.url}`)
       .then((response) => {
@@ -57,9 +54,19 @@ export default class TransactionsList extends Component {
         console.log(error);
       });
   }
-  componentDidUpdate() {
+  componentDidMount() {
     this.refreshList();
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log(prevState.addModalShow);
+    console.log(this.state.addModalShow);
+    if (prevState.addModalShow !== this.state.addModalShow) {
+      this.refreshList();
+    }
+  }
+  componentWillUnmount() {}
+
   deleteTransaction(id) {
     axios.delete(`${this.url}` + id).then((response) => {
       console.log(response.data);
@@ -162,6 +169,7 @@ export default class TransactionsList extends Component {
           <AddTransaction
             show={this.state.addModalShow}
             onHide={addModalClose}
+            refresh={this.refreshList}
           />
         </ButtonToolbar>
       </div>

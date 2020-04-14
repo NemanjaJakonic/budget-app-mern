@@ -85,7 +85,7 @@ export default class EditTransaction extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{ color: "white" }}>
         <h3>Edit Transaction</h3>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
