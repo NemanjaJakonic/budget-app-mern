@@ -1,16 +1,23 @@
+:root {
+  --primary: #03DAC5;
+  --secondary: #FF0266;
+}
+
 @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@700&display=swap");
+
 body {
   font-family: "Rubik", sans-serif;
   background: -webkit-linear-gradient(91deg, rgb(0, 0, 0), rgb(87, 20, 90));
   background: linear-gradient(91deg, rgb(0, 0, 0), rgb(87, 20, 90));
   font-size: 0.9rem;
 }
+
 .list li {
   color: #333;
   display: flex;
   justify-content: space-between;
   position: relative;
-  padding: 5px;
+  padding: 5px 0;
   /* margin: 10px 0; */
   border-bottom: 1px dotted lightgray;
 }
@@ -23,11 +30,11 @@ body {
 }
 
 .income {
-  color: green;
+  color: var(--primary);
 }
 
 .expense {
-  color: red;
+  color: var(--secondary);
 }
 
 .main {
@@ -42,11 +49,17 @@ body {
 span {
   width: 100px;
 }
+
 .btn-add {
   width: 100%;
   background: #511354;
   color: white;
 }
+
+.btn-add:hover {
+  color: var(--primary);
+}
+
 .bar {
   position: absolute;
   background: #511354;
@@ -54,6 +67,7 @@ span {
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
 }
+
 .progress_bar {
   height: 26px;
   background-color: ghostwhite;
@@ -64,5 +78,5 @@ span {
 
 .text-progress {
   position: relative;
-  color: white;
+  color: var(--primary);
 }

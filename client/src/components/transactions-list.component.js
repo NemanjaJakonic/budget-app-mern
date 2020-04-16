@@ -44,7 +44,6 @@ export default class TransactionsList extends Component {
     this.state = { transactions: [], addModalShow: false };
   }
   refreshList() {
-    console.log("pomozi");
     axios
       .get(`${this.url}`)
       .then((response) => {
@@ -59,8 +58,6 @@ export default class TransactionsList extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(prevState.addModalShow);
-    console.log(this.state.addModalShow);
     if (prevState.addModalShow !== this.state.addModalShow) {
       this.refreshList();
     }
@@ -128,6 +125,9 @@ export default class TransactionsList extends Component {
     let addModalClose = () => this.setState({ addModalShow: false });
     let balance = parseInt(this.totalIncome()) - parseInt(this.totalExpense());
     let progress = Math.floor((balance * 100) / this.totalIncome());
+    if (isNaN(progress)) {
+      progress = 0;
+    }
     let progress_style = {
       width: `${progress}%`,
     };
@@ -169,7 +169,6 @@ export default class TransactionsList extends Component {
           <AddTransaction
             show={this.state.addModalShow}
             onHide={addModalClose}
-            refresh={this.refreshList}
           />
         </ButtonToolbar>
       </div>

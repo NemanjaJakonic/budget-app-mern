@@ -54,9 +54,13 @@ export default class AddTransaction extends Component {
   }
 
   onChangeAmount(e) {
-    this.setState({
-      amount: e.target.value,
-    });
+    if (e.target.value < 0) {
+      alert("Income or expense must be bigger than zero");
+    } else {
+      this.setState({
+        amount: e.target.value,
+      });
+    }
   }
 
   onChangeDate(date) {
@@ -135,7 +139,9 @@ export default class AddTransaction extends Component {
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.props.onHide}>Close</Button>
+            <Button variant="danger" onClick={this.props.onHide}>
+              Close
+            </Button>
           </Modal.Footer>
         </Modal>
       </div>
